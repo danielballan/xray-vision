@@ -68,6 +68,8 @@ class ManualMask(object):
         y, x = np.mgrid[:image.shape[0], :image.shape[1]]
         self.points = np.transpose((x.ravel(), y.ravel()))
         self.canvas.mpl_connect('key_press_event', self.key_press_callback)
+        self.cid = self.canvas.mpl_connect('button_press_event',
+                                           self.on_press)
 
 
     def on_press(self, event):
@@ -107,13 +109,7 @@ class ManualMask(object):
         #  the mask array
         if not event.inaxes:
             return
-        if event.key=='i':
-            self.cid = self.canvas.mpl_connect('button_press_event',
-                                               self.on_press)
-        if event.key=='r':
-            self.rcid = self.canvas.mpl_connect('button_press_event',
-                                                self.reset)
-        if event.key=='f':
+        if event.key == 'escape':
             np.save("mask.npy", self.mask.reshape(self.img_shape))
             self.ax.imshow(self.mask.reshape(self.img_shape))
 
