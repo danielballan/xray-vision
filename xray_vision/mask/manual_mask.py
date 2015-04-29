@@ -46,7 +46,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 import matplotlib
-matplotlib.use('TkAgg')
 
 from matplotlib.widgets import Lasso
 from matplotlib.patches import PathPatch
