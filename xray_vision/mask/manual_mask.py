@@ -59,7 +59,7 @@ for an image"""
 
 class ManualMask(object):
     def __init__(self, ax, image):
-        self.axes = ax
+        self.ax = ax
         self.canvas = ax.figure.canvas
         self.data = image
         self.img_shape = image.shape
@@ -84,7 +84,7 @@ class ManualMask(object):
     def call_back(self, verts):
         p = path.Path(verts)
         self.patch = PathPatch(p, facecolor='g')
-        plt.gca().add_patch(self.patch)
+        self.ax.add_patch(self.patch)
 
         self.canvas.draw_idle()
         self.canvas.widgetlock.release(self.lasso)
@@ -115,18 +115,9 @@ class ManualMask(object):
                                                 self.reset)
         if event.key=='f':
             np.save("mask.npy", self.mask.reshape(self.img_shape))
-            plt.imshow(self.mask.reshape(self.img_shape))
-
+            self.ax.imshow(self.mask.reshape(self.img_shape))
 
     def manual_mask_demo(self):
-        self.axes = plt.subplot(111)
-        self.axes.imshow(self.data)
-        plt.title("Press 'i'- start drawing a mask , Press 'f'- finish masking ")
-
-
-if __name__  == "__main__":
-    from skimage import data
-    image = data.coins()
-    f, ax = plt.subplots()
-    mc = ManualMask(ax, image)
-    plt.show()
+        self.ax = plt.subplot(111)
+        self.ax.imshow(self.data)
+        self.ax.set_title("Press Esc when done.")
