@@ -49,7 +49,7 @@ import matplotlib
 from matplotlib.widgets import Lasso
 from matplotlib.patches import PathPatch
 from matplotlib import path
-from ..utils.mpl_helpers import ensure_ax_init
+from ..utils.mpl_helpers import ensure_ax_meth
 
 
 logger = logging.getLogger(__name__)
@@ -59,7 +59,7 @@ for an image"""
 
 
 class ManualMask(object):
-    @ensure_ax_init
+    @ensure_ax_meth
     def __init__(self, ax, image, cmap='gray'):
         """
         Use a GUI to specify region(s) of interest.
